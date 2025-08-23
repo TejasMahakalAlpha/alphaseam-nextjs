@@ -1,0 +1,18 @@
+/* This will hide the scrollbar on Webkit browsers like Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  width: 5px;  /* Adjust width as needed */
+  height: 5px; /* Adjust height as needed */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent; 
+}
+*{
+  margin: 0;
+  padding: 0;
+ 
+}
