@@ -1,6 +1,6 @@
 /* ======== Google Fonts (Kept Same) ======== */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
-
+ 
 /* ======== 1. Design System & Variables ======== */
 :root {
   /* Colors */
@@ -12,12 +12,12 @@
   --color-card-bg: rgba(23, 25, 45, 0.5);
   --color-card-border: rgba(255, 255, 255, 0.1);
   --color-glow: rgba(0, 132, 255, 0.5);
-
+ 
   /* Typography */
   --font-heading: 'Orbitron', sans-serif;
   --font-body: 'Poppins', sans-serif;
 }
-
+ 
 /* ======== 2. Base Styles ======== */
 .pageWrapper {
   background-color: var(--color-background);
@@ -25,14 +25,15 @@
   font-family: var(--font-body);
   overflow-x: hidden; /* Prevents overflow from animations */
 }
-
+ 
 .container {
   width: 100%;
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 2rem;
+  box-sizing: border-box;
 }
-
+ 
 /* ======== 3. Hero Section ======== */
 .heroSection {
   position: relative;
@@ -43,7 +44,7 @@
   text-align: center;
   overflow: hidden;
 }
-
+ 
 .heroVideo {
   position: absolute;
   top: 50%;
@@ -54,21 +55,22 @@
   object-fit: cover;
   z-index: 1;
 }
-
+ 
 .heroOverlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(0deg, var(--color-background) 0%, rgba(10, 11, 20, 0.5) 100%);
   z-index: 2;
 }
-
+ 
 .heroContent {
   max-width: 850px;
   margin: 0 auto;
   position: relative;
   z-index: 3;
+  padding: 0 1rem;
 }
-
+ 
 .heroContent h1 {
   font-family: var(--font-heading);
   font-size: clamp(3rem, 7.5vw, 5.5rem);
@@ -77,14 +79,15 @@
   margin-bottom: 1.5rem;
   color: var(--color-text-primary);
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-  overflow-wrap: break-word; /* Ensure headings wrap */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
-
+ 
 .heroContent .highlight {
   color: var(--color-primary);
   text-shadow: 0 0 25px var(--color-glow);
 }
-
+ 
 .heroContent p {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
   color: var(--color-text-secondary);
@@ -93,41 +96,44 @@
   max-width: 650px;
   margin-left: auto;
   margin-right: auto;
+  word-break: break-word;
 }
-
+ 
 .heroButtons {
   display: flex;
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
 }
-
+ 
 /* ======== 4. General Section & Components ======== */
 .section {
   padding: clamp(5rem, 12vw, 8rem) 0;
   position: relative;
 }
-
+ 
 .sectionHeader {
   text-align: center;
   margin-bottom: 4rem;
+  padding: 0 1rem;
 }
-
+ 
 .sectionHeader h2 {
   font-family: var(--font-heading);
   font-size: clamp(2.25rem, 5vw, 3.5rem);
   margin-bottom: 1rem;
-  overflow-wrap: break-word; /* Ensure headings wrap */
+  overflow-wrap: break-word;
 }
-
+ 
 .sectionHeader p {
   max-width: 600px;
   margin: 0 auto;
   color: var(--color-text-secondary);
   font-size: 1.1rem;
   line-height: 1.7;
+  word-break: break-word;
 }
-
+ 
 .primaryButton,
 .secondaryButton {
   display: inline-flex;
@@ -135,53 +141,56 @@
   justify-content: center;
   gap: 0.75rem;
   padding: 16px 32px;
-  border-radius: 50px;
-  font-weight: 600;
+  border-radius: 9999px; /* fully rounded */
+  font-weight: 700; /* bold text */
   font-size: 1rem;
   cursor: pointer;
   text-decoration: none;
   border: 2px solid transparent;
   transition: all 0.3s ease;
+  white-space: nowrap; /* prevent text breaking */
+  max-width: 100%; /* prevent overflow */
+  box-sizing: border-box;
 }
-
+ 
 .primaryButton {
   background: var(--color-primary);
   color: white;
   box-shadow: 0 0 20px var(--color-glow);
 }
-
+ 
 .primaryButton:hover {
   background-color: var(--color-primary-light);
   transform: translateY(-3px);
   box-shadow: 0 0 30px var(--color-glow);
 }
-
+ 
 .secondaryButton {
   background-color: transparent;
   color: var(--color-text-primary);
   border-color: var(--color-card-border);
 }
-
+ 
 .secondaryButton:hover {
   background-color: var(--color-card-bg);
   border-color: var(--color-primary);
 }
-
+ 
 .arrowIcon {
   transition: transform 0.3s ease;
 }
-
+ 
 .primaryButton:hover .arrowIcon {
   transform: translateX(5px);
 }
-
+ 
 /* ======== 5. Services Section ======== */
 .servicesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
-
+ 
 .serviceCard {
   position: relative;
   border-radius: 16px;
@@ -189,7 +198,7 @@
   border: 1px solid var(--color-card-border);
   transition: all 0.4s ease;
 }
-
+ 
 .serviceCardBg {
   position: absolute;
   inset: 0;
@@ -201,7 +210,7 @@
   inset: 0;
   background: linear-gradient(0deg, rgba(10, 11, 20, 0.95) 20%, rgba(10, 11, 20, 0.4) 100%);
 }
-
+ 
 .serviceCardContent {
   position: relative;
   z-index: 2;
@@ -211,7 +220,7 @@
   justify-content: flex-end;
   min-height: 380px;
 }
-
+ 
 .serviceCardIcon {
   width: 50px;
   height: 50px;
@@ -224,7 +233,7 @@
   margin-bottom: 1.5rem;
   box-shadow: 0 0 15px var(--color-glow);
 }
-
+ 
 .serviceCard h3 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -238,7 +247,7 @@
   transition: opacity 0.3s ease;
   overflow-wrap: break-word;
 }
-
+ 
 .serviceCard:hover {
   transform: translateY(-10px);
   box-shadow: 0 15px 30px rgba(0,0,0,0.3);
@@ -247,7 +256,7 @@
 .serviceCard:hover .serviceCardBg {
   transform: scale(1.1);
 }
-
+ 
 /* ======== 6. About Section ======== */
 .aboutGrid {
   display: grid;
@@ -277,7 +286,7 @@
   overflow: hidden;
   box-shadow: 0 0 40px rgba(0,0,0,0.5);
 }
-
+ 
 /* ======== 7. Case Studies Section ======== */
 .caseStudiesGrid {
   display: grid;
@@ -296,7 +305,7 @@
   border-color: var(--color-primary);
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
-
+ 
 .caseCardImage {
   position: relative;
   width: 100%;
@@ -305,7 +314,7 @@
 .caseCardContent {
   padding: 2rem;
 }
-
+ 
 .caseCardCategory {
   display: inline-block;
   background-color: rgba(0, 132, 255, 0.1);
@@ -316,7 +325,7 @@
   font-weight: 600;
   margin-bottom: 1rem;
 }
-
+ 
 .caseCardContent h3 {
   font-size: 1.4rem;
   font-weight: 600;
@@ -329,7 +338,7 @@
   line-height: 1.6;
   overflow-wrap: break-word;
 }
-
+ 
 /* ======== 8. CTA Section ======== */
 .ctaContainer {
   background: linear-gradient(45deg, #1f2937, #111827);
@@ -340,7 +349,7 @@
   position: relative;
   overflow: hidden;
 }
-
+ 
 .ctaContainer::before {
   content: '';
   position: absolute;
@@ -352,12 +361,12 @@
   animation: rotateGlow 15s linear infinite;
   opacity: 0.2;
 }
-
+ 
 @keyframes rotateGlow {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-
+ 
 .ctaContainer h2 {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 5vw, 3.5rem);
@@ -374,18 +383,21 @@
   font-size: 1.1rem;
   position: relative;
   z-index: 1;
+  word-break: break-word;
 }
-
+ 
 .ctaContainer .primaryButton {
   position: relative;
   z-index: 1;
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
 }
-
+ 
 /* ========================================
   9. Responsive Design (Refined & Completed)
- ========================================
-*/
-
+ ======================================== */
+ 
 /* --- Laptops and small desktops --- */
 @media (max-width: 1024px) {
   .aboutGrid {
@@ -395,112 +407,126 @@
     height: 450px;
   }
 }
-
+ 
 /* --- Tablets & Downwards --- */
 @media (max-width: 768px) {
   .container {
     padding: 0 1.5rem;
   }
   .heroSection {
-    min-height: 650px; /* Reduced min-height for tablets */
+    min-height: 650px;
   }
   .aboutGrid {
     grid-template-columns: 1fr;
-    text-align: center; /* Center align text when stacked */
+    text-align: center;
   }
   .aboutText {
-    max-width: 550px; /* Constrain text width for readability */
+    max-width: 550px;
     margin: 0 auto;
   }
   .aboutImage {
     height: 400px;
-    order: -1; 
+    order: -1;
     margin-bottom: 3rem;
   }
   .sectionHeader p, .ctaContainer p {
-    max-width: 100%; /* Ensure text respects parent padding */
+    max-width: 100%;
   }
   .primaryButton, .secondaryButton {
     padding: 14px 28px;
     font-size: 0.95rem;
   }
 }
-
+ 
 /* --- Mobile devices --- */
 @media (max-width: 480px) {
   .container {
     padding: 0 1rem;
   }
   .heroSection {
-    height: auto; /* Allow hero to size based on content */
-    min-height: 90vh; /* Use viewport height for better fit */
-    padding: 6rem 0; /* Add padding for content */
+    height: auto;
+    min-height: 90vh;
+    padding: 6rem 0;
+  }
+  .heroContent {
+    padding: 0 0.5rem;
   }
   .heroContent h1 {
-    font-size: clamp(2.5rem, 12vw, 3rem);
+    font-size: clamp(2rem, 8vw, 2.4rem);
+    line-height: 1.2;
+    word-break: break-word;
   }
   .heroContent p {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-bottom: 2rem;
+    line-height: 1.5;
+    word-break: break-word;
   }
   .heroButtons {
     flex-direction: column;
     align-items: center;
+    gap: 0.75rem;
   }
   .primaryButton, .secondaryButton {
     width: 100%;
     max-width: 320px;
+    text-align: center;
+    white-space: normal; /* allow text wrapping */
   }
   .section {
-    padding: 4rem 0;
+    padding: 3.5rem 0;
   }
   .sectionHeader {
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
   .sectionHeader h2, .aboutText h2, .ctaContainer h2 {
-    font-size: clamp(2rem, 10vw, 2.5rem);
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+    line-height: 1.3;
   }
-  /* Ensure grids become a single column */
   .servicesGrid, .caseStudiesGrid {
     grid-template-columns: 1fr;
   }
   .serviceCardContent {
-    padding: 2rem 1.5rem;
-    min-height: auto; /* Let content define height */
+    padding: 1.5rem;
+    min-height: auto;
   }
   .aboutImage {
-    height: 300px; /* Further reduce image height */
+    height: 260px;
   }
   .caseCardImage {
-    height: 200px; /* Adjust case study image height */
+    height: 160px;
   }
   .caseCardContent {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
   .ctaContainer {
-    padding: 3rem 1.5rem;
+    padding: 2rem 1rem;
+  }
+  .ctaContainer .primaryButton {
+    width: 100%;
+    max-width: 320px;
   }
 }
-
+ 
 /* --- Mobile landscape view --- */
 @media (orientation: landscape) and (max-height: 500px) {
   .heroSection {
-    min-height: 100vh; /* Ensure it still covers the screen */
+    min-height: 100vh;
     padding: 4rem 0;
   }
   .heroContent h1 {
-    font-size: 2.25rem;
+    font-size: 1.8rem;
     margin-bottom: 1rem;
   }
   .heroContent p {
-    font-size: 0.9rem;
-    margin-bottom: 1.5rem;
-    display: -webkit-box; /* Truncate paragraph text if needed */
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+    line-height: 1.4;
   }
   .section {
-    padding: 3rem 0;
+    padding: 2.5rem 0;
   }
 }
+ 
+ 
+ 
