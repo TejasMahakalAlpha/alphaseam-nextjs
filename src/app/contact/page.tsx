@@ -342,7 +342,7 @@ const ContactPage: React.FC = () => {
       >
         <iframe
           title="Google Map Location of Alphaseam in Hinjawadi, Pune"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3782.163351332434!2d73.73715187424185!3d18.5661642672328!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bbc90a153b63%3A0x13a24696c1df414f!2sHinjawadi%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1724482025732!5m2!1sen!2sin"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27378.14190882272!2d73.70038427431642!3d18.586254599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bbe7af9b56b1%3A0x7c1c86b796e12483!2sCity%20Centre%20-%20Kolte%20Patil!5e1!3m2!1sen!2sin!4v1756448329016!5m2!1sen!2sin"
           width="100%"
           height="450"
           style={{ border: 0 }}

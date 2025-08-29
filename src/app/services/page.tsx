@@ -33,9 +33,9 @@ const ServicesPage: React.FC = () => {
   ];
   
   const stats = [
-    { icon: <FaProjectDiagram />, value: "150+", label: "Projects Done" },
-    { icon: <FaUsers />, value: "80+", label: "Global Clients" },
-    { icon: <FaSmile />, value: "99%", label: "Client Satisfaction" },
+    { icon: <FaProjectDiagram />, value: "50+", label: "Projects Done" },
+    { icon: <FaUsers />, value: "18+", label: "Global Clients" },
+    { icon: <FaSmile />, value: "100%", label: "Client Satisfaction" },
   ];
 
   return (
