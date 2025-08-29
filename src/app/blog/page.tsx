@@ -1,56 +1,97 @@
 "use client";
 
 // app/blog/page.tsx
-import React from 'react'; // <--- THIS LINE IS FIXED
+import React, { useState, useEffect } from 'react'; // <--- useState ADDED
 import Head from 'next/head';
 import styles from './blog.module.css';
-import { FaArrowRight } from 'react-icons/fa';
+import { FaArrowRight, FaTimes } from 'react-icons/fa'; // <--- FaTimes ADDED for close icon
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
 
-// --- Backend Logic Removed ---
 // Static blog post data for design purposes.
-// Replace this with your actual data source when ready.
 const blogPosts = [
   {
     _id: '1',
     title: 'Unlocking Business Potential with SAP S/4HANA',
-    content: 'Discover the core advantages of migrating to SAP S/4HANA. From real-time analytics to a simplified data model, we explore how this intelligent ERP can revolutionize your business operations.',
-    image: '/image/home2.jpg', // **Place images in /public/images/blog/**
+    content: 'Discover the core advantages of migrating to SAP S/4HANA. From real-time analytics to a simplified data model, we explore how this intelligent ERP can revolutionize your business operations. This new era of enterprise resource planning offers unprecedented speed and agility, enabling businesses to make smarter decisions faster. The in-memory computing power of HANA allows for complex calculations on the fly, eliminating batch processing delays. Furthermore, the Fiori user experience provides an intuitive, role-based interface that works seamlessly across devices, boosting user adoption and productivity.',
+    image: '/image/home2.jpg',
     createdAt: '2025-08-15T10:00:00Z',
   },
   {
     _id: '2',
     title: 'The Future of AI in Enterprise Resource Planning',
-    content: 'Artificial intelligence is no longer a futuristic concept; it\'s a present-day reality in ERP. Learn how AI is enhancing automation, predictive analytics, and decision-making.',
+    content: 'Artificial intelligence is no longer a futuristic concept; it\'s a present-day reality in ERP. Learn how AI is enhancing automation, predictive analytics, and decision-making within modern ERP systems, leading to more efficient and intelligent business processes.',
     image: '/image/hero.jpg',
     createdAt: '2025-08-10T09:00:00Z',
   },
   {
     _id: '3',
     title: 'Cloud vs. On-Premise: A Modern Tech Dilemma',
-    content: 'Choosing between cloud and on-premise infrastructure is a critical decision. We break down the pros, cons, and key considerations for scalability, security, and cost.',
+    content: 'Choosing between cloud and on-premise infrastructure is a critical decision. We break down the pros, cons, and key considerations for scalability, security, and cost-effectiveness to help you make the right choice for your enterprise.',
     image: '/image/home1.jpg',
     createdAt: '2025-08-05T14:30:00Z',
   },
   {
     _id: '4',
     title: 'Cybersecurity Best Practices for a Digital-First World',
-    content: 'As businesses become more digitized, the threat landscape evolves. Here are essential cybersecurity strategies to protect your valuable data and infrastructure from modern threats.',
+    content: 'As businesses become more digitized, the threat landscape evolves. Here are essential cybersecurity strategies to protect your valuable data and infrastructure from modern threats, ensuring business continuity and customer trust.',
     image: '/image/home3.jpg',
     createdAt: '2025-07-28T11:00:00Z',
   },
 ];
 
+
+// --- NEW ---
+// Popup/Modal Component for displaying blog details
+const BlogModal = ({ blog, onClose }) => {
+  if (!blog) return null;
+
+  // Stop propagation to prevent closing modal when clicking inside content
+  const handleContentClick = (e) => e.stopPropagation();
+
+  return (
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={handleContentClick} data-aos="zoom-in" data-aos-duration="300">
+        <button className={styles.closeButton} onClick={onClose}>
+          <FaTimes />
+        </button>
+        <img src={blog.image} alt={blog.title} className={styles.modalImage} />
+        <div className={styles.modalTextContent}>
+          <h3>{blog.title}</h3>
+          <p className={styles.postMeta}>
+            {new Date(blog.createdAt).toLocaleDateString('en-US', {
+              year: 'numeric', month: 'long', day: 'numeric',
+            })}
+          </p>
+          <p className={styles.modalFullContent}>{blog.content}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 const BlogPage: React.FC = () => {
+  // --- NEW ---
+  // State to manage which blog is selected for the modal
+  const [selectedBlog, setSelectedBlog] = useState(null);
+
   const newsletterLink =
     "https://www.linkedin.com/newsletters/alphaseam-sap-services-7341412789007069189";
-  
-  // Initialize AOS animations
+
   useEffect(() => {
     AOS.init({ once: true, duration: 800, easing: 'ease-in-out' });
   }, []);
+  
+  // --- NEW ---
+  // Functions to open and close the modal
+  const handleReadMore = (blog) => {
+    setSelectedBlog(blog);
+  };
+  
+  const handleCloseModal = () => {
+    setSelectedBlog(null);
+  };
 
   const featuredBlog = blogPosts[0];
   const otherBlogs = blogPosts.slice(1);
@@ -95,10 +136,11 @@ const BlogPage: React.FC = () => {
                   })}
                 </p>
                 <h3>{featuredBlog.title}</h3>
-                <p>{featuredBlog.content}</p>
-                <a href={`/blog/${featuredBlog._id}`} className={styles.readMoreLink}>
+                <p>{featuredBlog.content.slice(0, 150)}...</p> {/* Shortened for preview */}
+                {/* --- MODIFIED --- Changed <a> to <button> with onClick */}
+                <button onClick={() => handleReadMore(featuredBlog)} className={styles.readMoreLink}>
                   Read More <FaArrowRight />
-                </a>
+                </button>
               </div>
             </div>
           </section>
@@ -125,14 +167,15 @@ const BlogPage: React.FC = () => {
                 <div className={styles.blogCardContent}>
                   <p className={styles.postMeta}>
                     {new Date(blog.createdAt).toLocaleDateString('en-US', {
-                       year: 'numeric', month: 'long', day: 'numeric',
+                      year: 'numeric', month: 'long', day: 'numeric',
                     })}
                   </p>
                   <h4>{blog.title}</h4>
                   <p>{blog.content.slice(0, 100)}...</p>
-                  <a href={`/blog/${blog._id}`} className={styles.readMoreLink}>
+                  {/* --- MODIFIED --- Changed <a> to <button> with onClick */}
+                  <button onClick={() => handleReadMore(blog)} className={styles.readMoreLink}>
                     Read More <FaArrowRight />
-                  </a>
+                  </button>
                 </div>
               </div>
             ))}
@@ -156,6 +199,9 @@ const BlogPage: React.FC = () => {
           </a>
         </section>
       </main>
+
+      {/* --- NEW --- Conditionally render the modal */}
+      <BlogModal blog={selectedBlog} onClose={handleCloseModal} />
     </div>
   );
 };
