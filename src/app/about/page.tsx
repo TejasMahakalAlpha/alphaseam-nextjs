@@ -64,7 +64,7 @@ const journeyData: JourneyItem[] = [
   {
     year: "2023",
     title: "Global Footprint",
-    desc: "Expanded rapidly, serving a diverse clientele across Europe, the Middle East, and Asia.",
+    desc: "Expanded rapidly, serving a diverse clients across Europe, the Middle East, and Asia.",
   },
   {
     year: "2024",

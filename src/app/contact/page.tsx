@@ -47,7 +47,7 @@ const ContactPage: React.FC = () => {
     type: "success" | "error";
   }>({ show: false, message: "", type: "success" });
 
-  const contactFormRef = useRef<HTMLDivElement>(null); // Ref for form card
+  const contactFormRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     AOS.init({ once: true, duration: 1000, easing: "ease-in-out" });
@@ -63,7 +63,6 @@ const ContactPage: React.FC = () => {
     }, 4000);
   };
 
-  // --- Enhanced Validation Logic ---
   const validateField = (name: keyof FormData, value: string): string => {
     switch (name) {
       case "firstName":
@@ -94,27 +93,22 @@ const ContactPage: React.FC = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     let { name, value } = e.target;
-
     if (name === "phone") {
       value = value.replace(/[^0-9]/g, "");
     }
-
     setFormData((prev) => ({ ...prev, [name]: value }));
-
     if (errors[name as keyof FormErrors]) {
       const error = validateField(name as keyof FormData, value);
       setErrors((prev) => ({ ...prev, [name]: error }));
     }
   };
 
-  // --- UPDATED handleSubmit FUNCTION ---
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isSubmitting) return;
 
     const newErrors: FormErrors = {};
     let formIsValid = true;
-
     (Object.keys(formData) as Array<keyof FormData>).forEach((key) => {
       const error = validateField(key, formData[key]);
       if (error) {
@@ -163,7 +157,6 @@ const ContactPage: React.FC = () => {
     }
   };
 
-  // --- Baaki saara JSX code (UI) same rahega ---
   return (
     <div className={styles["contact-page"]}>
       <Head>
@@ -247,110 +240,51 @@ const ContactPage: React.FC = () => {
             >
               <div className={styles["form-row"]}>
                 <div className={styles["input-wrapper"]}>
-                  <input
-                    type="text"
-                    name="firstName"
-                    placeholder="First Name"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className={errors.firstName ? styles.error : ""}
-                  />
-                  {errors.firstName && (
-                    <span className={styles["error-message"]}>
-                      {errors.firstName}
-                    </span>
-                  )}
+                  <input type="text" name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} className={errors.firstName ? styles.error : ""} />
+                  {errors.firstName && (<span className={styles["error-message"]}>{errors.firstName}</span>)}
                 </div>
                 <div className={styles["input-wrapper"]}>
-                  <input
-                    type="text"
-                    name="lastName"
-                    placeholder="Last Name"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className={errors.lastName ? styles.error : ""}
-                  />
-                  {errors.lastName && (
-                    <span className={styles["error-message"]}>
-                      {errors.lastName}
-                    </span>
-                  )}
+                  <input type="text" name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} className={errors.lastName ? styles.error : ""} />
+                  {errors.lastName && (<span className={styles["error-message"]}>{errors.lastName}</span>)}
                 </div>
               </div>
               <div className={styles["input-wrapper"]}>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Your Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={errors.email ? styles.error : ""}
-                />
-                {errors.email && (
-                  <span className={styles["error-message"]}>
-                    {errors.email}
-                  </span>
-                )}
+                <input type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} className={errors.email ? styles.error : ""} />
+                {errors.email && (<span className={styles["error-message"]}>{errors.email}</span>)}
               </div>
               <div className={styles["input-wrapper"]}>
-                <input
-                  type="tel"
-                  name="phone"
-                  placeholder="Your Phone Number (10 digits)"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className={errors.phone ? styles.error : ""}
-                  maxLength={10}
-                />
-                {errors.phone && (
-                  <span className={styles["error-message"]}>
-                    {errors.phone}
-                  </span>
-                )}
+                <input type="tel" name="phone" placeholder="Your Phone Number (10 digits)" value={formData.phone} onChange={handleChange} className={errors.phone ? styles.error : ""} maxLength={10} />
+                {errors.phone && (<span className={styles["error-message"]}>{errors.phone}</span>)}
               </div>
               <div className={styles["input-wrapper"]}>
-                <textarea
-                  name="message"
-                  placeholder="Your Message"
-                  rows={5}
-                  value={formData.message}
-                  onChange={handleChange}
-                  className={errors.message ? styles.error : ""}
-                />
-                {errors.message && (
-                  <span className={styles["error-message"]}>
-                    {errors.message}
-                  </span>
-                )}
+                <textarea name="message" placeholder="Your Message" rows={5} value={formData.message} onChange={handleChange} className={errors.message ? styles.error : ""} />
+                {errors.message && (<span className={styles["error-message"]}>{errors.message}</span>)}
               </div>
-              <button
-                type="submit"
-                className={styles["glowing-btn"]}
-                disabled={isSubmitting}
-              >
+              <button type="submit" className={styles["glowing-btn"]} disabled={isSubmitting}>
                 {isSubmitting ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
         </div>
-      </main>
 
-      <section
-        className={styles["map-section"]}
-        data-aos="fade-up"
-        data-aos-delay="300"
-      >
-        <iframe
-          title="Google Map Location of Alphaseam in Hinjawadi, Pune"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27378.14190882272!2d73.70038427431642!3d18.586254599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bbe7af9b56b1%3A0x7c1c86b796e12483!2sCity%20Centre%20-%20Kolte%20Patil!5e1!3m2!1sen!2sin!4v1756448329016!5m2!1sen!2sin"
-          width="100%"
-          height="450"
-          style={{ border: 0 }}
-          allowFullScreen
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </section>
+        {/* --- MAP SECTION MOVED INSIDE MAIN WRAPPER --- */}
+        <section
+          className={styles["map-section"]}
+          data-aos="fade-up"
+          data-aos-delay="300"
+        >
+          <iframe
+            title="Google Map Location of Alphaseam in Hinjawadi, Pune"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27378.14190882272!2d73.70038427431642!3d18.586254599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bbe7af9b56b1%3A0x7c1c86b796e12483!2sCity%20Centre%20-%20Kolte%20Patil!5e1!3m2!1sen!2sin!4v1756448329016!5m2!1sen!2sin"
+            width="100%"
+            height="400"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </section>
+      </main>
     </div>
   );
 };

@@ -530,3 +530,135 @@
  
  
  
+/* ========================================
+   10. Service Modal Styles
+   ======================================== */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(10, 11, 20, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modalContent {
+  background: linear-gradient(135deg, rgba(23, 25, 45, 0.7), rgba(10, 11, 20, 0.8));
+  border: 1px solid var(--color-card-border);
+  border-radius: 16px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0,0,0,0.3);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.modalCloseButton:hover {
+  background-color: var(--color-primary);
+  color: white;
+  transform: rotate(90deg);
+}
+
+.modalImageContainer {
+  flex: 1 1 40%; /* Flex-grow, flex-shrink, flex-basis */
+  position: relative;
+  min-height: 400px;
+}
+
+.modalTextContainer {
+  flex: 1 1 60%;
+  padding: 2.5rem 3rem;
+  overflow-y: auto;
+  color: var(--color-text-primary);
+}
+
+.modalTextContainer h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--color-primary-light);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.modalTextContainer p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+
+/* Make service card icon clickable */
+.serviceCardIcon {
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.serviceCardIcon:hover {
+    transform: scale(1.1);
+    background-color: var(--color-primary-light);
+}
+
+
+/* --- Modal Responsive Design --- */
+
+/* For tablets */
+@media (max-width: 768px) {
+  .modalContent {
+    flex-direction: column;
+    max-height: 85vh;
+  }
+  .modalImageContainer {
+    flex: 1 1 250px; /* Give it a fixed height */
+    min-height: 250px;
+  }
+  .modalTextContainer {
+    flex: 1 1 auto; /* Allow it to take remaining space and scroll */
+    padding: 2rem 1.5rem;
+  }
+}
+
+/* For mobile phones */
+@media (max-width: 480px) {
+    .modalImageContainer {
+        flex-basis: 200px; /* Smaller height on mobile */
+        min-height: 200px;
+    }
+    .modalTextContainer {
+        padding: 1.5rem;
+    }
+    .modalTextContainer h2 {
+        font-size: 1.5rem;
+    }
+    .modalTextContainer p {
+        font-size: 0.95rem;
+    }
+    .modalCloseButton {
+        top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+    }
+}
