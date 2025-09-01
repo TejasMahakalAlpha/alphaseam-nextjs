@@ -92,7 +92,10 @@ const ContactPage: React.FC = () => {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    let { name, value } = e.target;
+    // --- FIXED 'let' vs 'const' ERROR HERE ---
+    const { name } = e.target;
+    let value = e.target.value;
+
     if (name === "phone") {
       value = value.replace(/[^0-9]/g, "");
     }
@@ -184,8 +187,9 @@ const ContactPage: React.FC = () => {
 
       <section className={styles["contact-hero-section"]} data-aos="fade-in">
         <h1>Get In Touch</h1>
+        {/* --- FIXED APOSTROPHE ERROR HERE --- */}
         <p>
-          We're here to answer any question you might have. We look forward to
+          We&apos;re here to answer any question you might have. We look forward to
           hearing from you.
         </p>
       </section>
@@ -267,7 +271,6 @@ const ContactPage: React.FC = () => {
           </div>
         </div>
 
-        {/* --- MAP SECTION MOVED INSIDE MAIN WRAPPER --- */}
         <section
           className={styles["map-section"]}
           data-aos="fade-up"

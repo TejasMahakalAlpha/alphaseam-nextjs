@@ -17,14 +17,12 @@ const PlusIcon = () => (
     <path d="M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
-// --- NEW: Close Icon for Modal ---
 const CloseIcon = () => (
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         <path d="M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
 );
-
 
 // --- Public Assets ---
 const heroVideo = "/video/bg9_video.mp4";
@@ -37,7 +35,6 @@ const case2 = "/image/home10.jpg";
 const case3 = "/image/home11.jpg";
 
 // --- Data ---
-// Defining the type for a single service for type safety
 type Service = {
   img: string;
   title: string;
@@ -61,7 +58,7 @@ const services: Service[] = [
     title: "System Integration",
     desc: "Synchronizing disparate systems to create a seamless, optimized technology ecosystem. We specialize in connecting APIs, databases, and third-party platforms to ensure smooth data flow, automate workflows, and provide a single source of truth for your business.",
   },
-].map(service => ({ ...service, icon: <PlusIcon /> })); // Add icon dynamically
+].map(service => ({ ...service, icon: <PlusIcon /> }));
 
 const caseStudies = [
   { img: case1, title: "Global Retailer Transformation", desc: "Implemented a full-scale SAP S/4HANA transformation across 25+ countries, unifying global operations.", category: "SAP S/4HANA", },
@@ -69,14 +66,12 @@ const caseStudies = [
   { img: case3, title: "Logistics Network Integration", desc: "Orchestrated a complex system integration across 10+ smart warehouses, boosting efficiency by 40%.", category: "System Integration", },
 ];
 
-// --- NEW MODAL COMPONENT ---
 interface ServiceModalProps {
   service: Service;
   onClose: () => void;
 }
 
 const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) => {
-  // Prevent clicks inside the modal from closing it
   const handleModalContentClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
@@ -99,19 +94,16 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ service, onClose }) => {
   );
 };
 
-
 const HomePage: React.FC = () => {
   const router = useRouter();
   const consultationLink = "https://calendly.com/alphaseam-operations/30min";
   
-  // --- NEW STATE FOR MODAL ---
   const [selectedService, setSelectedService] = useState<Service | null>(null);
 
   useEffect(() => {
     AOS.init({ duration: 800, once: true, easing: "ease-out-quad" });
   }, []);
   
-  // --- NEW HANDLERS FOR MODAL ---
   const handleOpenModal = (service: Service) => {
     setSelectedService(service);
   };
@@ -131,7 +123,6 @@ const HomePage: React.FC = () => {
       </Head>
 
       <main className={styles.pageWrapper}>
-        {/* Hero Section */}
         <section className={styles.heroSection}>
             <video className={styles.heroVideo} autoPlay muted loop playsInline>
                 <source src={heroVideo} type="video/mp4" />
@@ -164,7 +155,6 @@ const HomePage: React.FC = () => {
             </div>
         </section>
 
-        {/* Services Section */}
         <section className={styles.section}>
           <div className={styles.container}>
             <div className={styles.sectionHeader} data-aos="fade-up">
@@ -180,29 +170,26 @@ const HomePage: React.FC = () => {
                       <Image src={service.img} alt={service.title} layout="fill" objectFit="cover" />
                   </div>
                   <div className={styles.serviceCardContent}>
-                    {/* --- ADDED ONCLICK HANDLER HERE --- */}
                     <div className={styles.serviceCardIcon} onClick={() => handleOpenModal(service)}>
                       {service.icon}
                     </div>
                     <h3>{service.title}</h3>
-                    <p>{service.desc.substring(0, 100)}...</p> {/* Shortened description for card view */}
+                    <p>{service.desc.substring(0, 100)}...</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
-
-        {/* --- Other sections remain unchanged --- */}
         
-        {/* About Section */}
         <section className={styles.section}>
             <div className={styles.container}>
             <div className={styles.aboutGrid}>
                 <div className={styles.aboutText} data-aos="fade-right" data-aos-delay="100">
                 <h2>Your Partner in Innovation</h2>
+                {/* --- FIXED APOSTROPHE ERROR HERE --- */}
                 <p>
-                    We are a global team of SAP & digital experts dedicated to
+                    We&apos;re a global team of SAP & digital experts dedicated to
                     accelerating your business transformation with agile processes and
                     innovative technology. Our commitment is to deliver excellence and drive tangible results.
                 </p>
@@ -217,13 +204,12 @@ const HomePage: React.FC = () => {
             </div>
         </section>
 
-        {/* Case Studies Section */}
         <section className={styles.section}>
             <div className={styles.container}>
             <div className={styles.sectionHeader} data-aos="fade-up">
                 <h2>Success in Action</h2>
                 <p>
-                We deliver impactful results. Explore how we've helped leading businesses transform and succeed.
+                We deliver impactful results. Explore how we&apos;ve helped leading businesses transform and succeed.
                 </p>
             </div>
             <div className={styles.caseStudiesGrid}>
@@ -243,13 +229,13 @@ const HomePage: React.FC = () => {
             </div>
         </section>
 
-        {/* Consultation CTA Section */}
         <section className={styles.section}>
             <div className={styles.container}>
             <div className={styles.ctaContainer} data-aos="fade-up">
                 <h2>Ready to Build Your Future?</h2>
+                {/* --- FIXED APOSTROPHE ERROR HERE --- */}
                 <p>
-                Let's talk about your project. Book a free, no-obligation consultation with our experts today.
+                Let&apos;s talk about your project. Book a free, no-obligation consultation with our experts today.
                 </p>
                 <a href={consultationLink} target="_blank" rel="noopener noreferrer" className={styles.primaryButton}>
                 Book Free Consultation <ArrowIcon />
@@ -259,7 +245,6 @@ const HomePage: React.FC = () => {
         </section>
       </main>
 
-      {/* --- RENDER MODAL CONDITIONALLY --- */}
       {selectedService && (
         <ServiceModal service={selectedService} onClose={handleCloseModal} />
       )}

@@ -1,15 +1,28 @@
 "use client";
 
-// app/blog/page.tsx
-import React, { useState, useEffect } from 'react'; // <--- useState ADDED
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Image from 'next/image'; // <-- Imported Image component
 import styles from './blog.module.css';
-import { FaArrowRight, FaTimes } from 'react-icons/fa'; // <--- FaTimes ADDED for close icon
+import { FaArrowRight, FaTimes } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// Static blog post data for design purposes.
-const blogPosts = [
+// Type definitions for props
+interface Blog {
+  _id: string;
+  title: string;
+  content: string;
+  image: string;
+  createdAt: string;
+}
+
+interface BlogModalProps {
+  blog: Blog | null;
+  onClose: () => void;
+}
+
+const blogPosts: Blog[] = [
   {
     _id: '1',
     title: 'Unlocking Business Potential with SAP S/4HANA',
@@ -20,7 +33,8 @@ const blogPosts = [
   {
     _id: '2',
     title: 'The Future of AI in Enterprise Resource Planning',
-    content: 'Artificial intelligence is no longer a futuristic concept; it\'s a present-day reality in ERP. Learn how AI is enhancing automation, predictive analytics, and decision-making within modern ERP systems, leading to more efficient and intelligent business processes.',
+    // --- FIXED APOSTROPHE ERROR HERE ---
+    content: 'Artificial intelligence is no longer a futuristic concept; it&apos;s a present-day reality in ERP. Learn how AI is enhancing automation, predictive analytics, and decision-making within modern ERP systems, leading to more efficient and intelligent business processes.',
     image: '/image/hero.jpg',
     createdAt: '2025-08-10T09:00:00Z',
   },
@@ -40,14 +54,10 @@ const blogPosts = [
   },
 ];
 
-
-// --- NEW ---
-// Popup/Modal Component for displaying blog details
-const BlogModal = ({ blog, onClose }) => {
+const BlogModal: React.FC<BlogModalProps> = ({ blog, onClose }) => {
   if (!blog) return null;
 
-  // Stop propagation to prevent closing modal when clicking inside content
-  const handleContentClick = (e) => e.stopPropagation();
+  const handleContentClick = (e: React.MouseEvent) => e.stopPropagation();
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
@@ -55,7 +65,10 @@ const BlogModal = ({ blog, onClose }) => {
         <button className={styles.closeButton} onClick={onClose}>
           <FaTimes />
         </button>
-        <img src={blog.image} alt={blog.title} className={styles.modalImage} />
+        {/* --- CONVERTED <img> to <Image> --- */}
+        <div className={styles.modalImageWrapper}>
+            <Image src={blog.image} alt={blog.title} className={styles.modalImage} layout="fill" objectFit="cover" />
+        </div>
         <div className={styles.modalTextContent}>
           <h3>{blog.title}</h3>
           <p className={styles.postMeta}>
@@ -70,22 +83,15 @@ const BlogModal = ({ blog, onClose }) => {
   );
 };
 
-
 const BlogPage: React.FC = () => {
-  // --- NEW ---
-  // State to manage which blog is selected for the modal
-  const [selectedBlog, setSelectedBlog] = useState(null);
-
-  const newsletterLink =
-    "https://www.linkedin.com/newsletters/alphaseam-sap-services-7341412789007069189";
+  const [selectedBlog, setSelectedBlog] = useState<Blog | null>(null);
+  const newsletterLink = "https://www.linkedin.com/newsletters/alphaseam-sap-services-7341412789007069189";
 
   useEffect(() => {
     AOS.init({ once: true, duration: 800, easing: 'ease-in-out' });
   }, []);
   
-  // --- NEW ---
-  // Functions to open and close the modal
-  const handleReadMore = (blog) => {
+  const handleReadMore = (blog: Blog) => {
     setSelectedBlog(blog);
   };
   
@@ -117,16 +123,18 @@ const BlogPage: React.FC = () => {
       </header>
 
       <main className={styles.container}>
-        {/* Featured Blog Post */}
         {featuredBlog && (
           <section className={styles.featuredSection} data-aos="fade-up">
             <h2 className={styles.sectionTitle}>Featured Article</h2>
             <div className={styles.featuredCard}>
               <div className={styles.featuredImageWrapper}>
-                <img
+                {/* --- CONVERTED <img> to <Image> --- */}
+                <Image
                   src={featuredBlog.image}
                   alt={featuredBlog.title}
                   className={styles.featuredImage}
+                  layout="fill"
+                  objectFit="cover"
                 />
               </div>
               <div className={styles.featuredContent}>
@@ -136,8 +144,7 @@ const BlogPage: React.FC = () => {
                   })}
                 </p>
                 <h3>{featuredBlog.title}</h3>
-                <p>{featuredBlog.content.slice(0, 150)}...</p> {/* Shortened for preview */}
-                {/* --- MODIFIED --- Changed <a> to <button> with onClick */}
+                <p>{featuredBlog.content.slice(0, 150)}...</p>
                 <button onClick={() => handleReadMore(featuredBlog)} className={styles.readMoreLink}>
                   Read More <FaArrowRight />
                 </button>
@@ -146,7 +153,6 @@ const BlogPage: React.FC = () => {
           </section>
         )}
 
-        {/* Other Blog Posts */}
         <section className={styles.latestArticlesSection}>
           <h2 className={styles.sectionTitle} data-aos="fade-up">
             Latest Articles
@@ -159,11 +165,16 @@ const BlogPage: React.FC = () => {
                 data-aos="fade-up"
                 data-aos-delay={100 + index * 100}
               >
-                <img
-                  src={blog.image}
-                  alt={blog.title}
-                  className={styles.blogCardImage}
-                />
+                <div className={styles.blogCardImageWrapper}>
+                    {/* --- CONVERTED <img> to <Image> --- */}
+                    <Image
+                        src={blog.image}
+                        alt={blog.title}
+                        className={styles.blogCardImage}
+                        layout="fill"
+                        objectFit="cover"
+                    />
+                </div>
                 <div className={styles.blogCardContent}>
                   <p className={styles.postMeta}>
                     {new Date(blog.createdAt).toLocaleDateString('en-US', {
@@ -172,7 +183,6 @@ const BlogPage: React.FC = () => {
                   </p>
                   <h4>{blog.title}</h4>
                   <p>{blog.content.slice(0, 100)}...</p>
-                  {/* --- MODIFIED --- Changed <a> to <button> with onClick */}
                   <button onClick={() => handleReadMore(blog)} className={styles.readMoreLink}>
                     Read More <FaArrowRight />
                   </button>
@@ -182,7 +192,6 @@ const BlogPage: React.FC = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
         <section className={styles.ctaSection} data-aos="zoom-in">
           <h3>Stay Ahead of the Curve</h3>
           <p>
@@ -200,7 +209,6 @@ const BlogPage: React.FC = () => {
         </section>
       </main>
 
-      {/* --- NEW --- Conditionally render the modal */}
       <BlogModal blog={selectedBlog} onClose={handleCloseModal} />
     </div>
   );
