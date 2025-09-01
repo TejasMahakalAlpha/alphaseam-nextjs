@@ -3,61 +3,70 @@
 // app/projects/page.tsx
 import React, { useEffect, useRef } from 'react';
 import Head from 'next/head';
+import Image from 'next/image'; // Import the Image component
 import styles from './project.module.css';
 import Link from 'next/link';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
-// --- Backend Logic Removed ---
-// Static project data based on your screenshots.
-const projectsData = [
-  {
-    _id: '1',
-    title: 'MooRopan',
-    description: 'An agriculture tech solution designed to optimize crop management and improve yield for farmers.',
-    tags: ['React.js', 'Express.js', 'Node.js', 'MongoDB'],
-  },
-  {
-    _id: '2',
-    title: 'SRDT',
-    description: 'A security and data transformation tool ensuring data integrity and protection for enterprise-level applications.',
-    tags: ['React.js', 'Java', 'Spring Boot', 'MySQL'],
-  },
-  {
-    _id: '3',
-    title: 'Amsa',
-    description: 'A comprehensive software suite for managing complex business operations and workflows.',
-    tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
-  },
-  {
-    _id: '4',
-    title: 'Crowd Fund',
-    description: 'A robust platform for raising capital through community contributions, featuring secure payment gateway and project tracking.',
-    tags: ['React', 'Java', 'Spring boot', 'MySQL', 'Razorpay', 'Postgresql'],
-  },
-  {
-    _id: '5',
-    title: 'Agrimitra',
-    description: 'A farmer-centric application providing vital information on weather, market rates, and best farming practices.',
-    tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
-  },
-  {
-    _id: '6',
-    title: 'Exilieen',
-    description: 'A comprehensive software suite for managing complex business operations and workflows.',
-    tags: ['React.js', 'MongoDB', 'Node.js', 'Express.js'],
-  },
-];
 
 // Type definition for a Project
 interface Project {
   _id: string;
   title: string;
   description: string;
+  image: string; // Added image property
   tags?: string[];
 }
 
-// Custom Hook for the 3D Tilt effect
+// --- UPDATED: Static project data with image paths ---
+// Make sure you have these images in your /public/projects/ folder
+const projectsData: Project[] = [
+  {
+    _id: '1',
+    title: 'MooRopan',
+    description: 'An agriculture tech solution designed to optimize crop management and improve yield for farmers.',
+    image: '/image/mooropan.png', // Image path
+    tags: ['React.js', 'Express.js', 'Node.js', 'MongoDB'],
+  },
+  {
+    _id: '2',
+    title: 'SRDT',
+    description: 'A security and data transformation tool ensuring data integrity and protection for enterprise-level applications.',
+    image: '/image/srdt.png', // Image path
+    tags: ['React.js', 'Java', 'Spring Boot', 'MySQL'],
+  },
+  {
+    _id: '3',
+    title: 'Amsa',
+    description: 'A comprehensive software suite for managing complex business operations and workflows.',
+    image: '/image/amsa.png', // Image path
+    tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
+  },
+  {
+    _id: '4',
+    title: 'Crowd Fund',
+    description: 'A robust platform for raising capital through community contributions, featuring secure payment gateway and project tracking.',
+    image: '/image/crowdfund_logo.png', // Image path
+    tags: ['React', 'Java', 'Spring boot', 'MySQL', 'Razorpay', 'Postgresql'],
+  },
+  {
+    _id: '5',
+    title: 'Agrimitra',
+    description: 'A farmer-centric application providing vital information on weather, market rates, and best farming practices.',
+    image: '/image/agrimitra.jpeg', // Image path
+    tags: ['React.js', 'Node.js', 'Express.js', 'MongoDB'],
+  },
+  {
+    _id: '6',
+    title: 'Exilieen',
+    description: 'A comprehensive software suite for managing complex business operations and workflows.',
+    image: '/image/exilieen_logo.png', // Image path
+    tags: ['React.js', 'MongoDB', 'Node.js', 'Express.js'],
+  },
+];
+
+
+// Custom Hook for the 3D Tilt effect (No changes here)
 const use3DTilt = () => {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -90,15 +99,6 @@ const use3DTilt = () => {
   return ref;
 };
 
-// Helper to get initials from title
-const getInitials = (title: string) => {
-  const words = title.split(' ');
-  if (words.length > 1) {
-    return words[0].charAt(0) + words[1].charAt(0);
-  }
-  return title.slice(0, 2);
-};
-
 // ProjectCard component
 interface ProjectCardProps {
   project: Project;
@@ -107,7 +107,8 @@ interface ProjectCardProps {
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   const tiltRef = use3DTilt();
-  const initials = getInitials(project.title);
+  
+  // The 'getInitials' function is no longer needed
 
   return (
     <div
@@ -116,8 +117,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
       data-aos="fade-up"
       data-aos-delay={100 * index}
     >
+      {/* --- UPDATED: Replaced initials with Image component --- */}
       <div className={styles.projectLogo}>
-        <span>{initials}</span>
+        <Image
+            src={project.image}
+            alt={`${project.title} Logo`}
+            layout="fill"
+            objectFit="cover"
+        />
       </div>
       <div className={styles.projectCardContent}>
         <h3>{project.title}</h3>
@@ -134,6 +141,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
   );
 };
 
+// Main ProjectsPage component (No changes here)
 const ProjectsPage: React.FC = () => {
   useEffect(() => {
     AOS.init({ once: true, duration: 800, easing: 'ease-in-out' });

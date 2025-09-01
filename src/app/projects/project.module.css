@@ -74,7 +74,7 @@
   align-items: center;
   
   /* 3D Effect Properties */
-  transform-style: preserve-d;
+  transform-style: preserve-3d;
   transform: perspective(1000px) rotateY(var(--rotateY)) rotateX(var(--rotateX));
   transition: transform 0.1s ease-out, border-color 0.3s ease;
 }
@@ -83,20 +83,20 @@
   border-color: var(--accent-color);
 }
 
+/* --- UPDATED --- */
 .projectLogo {
+  position: relative; /* Added for Image component positioning */
+  overflow: hidden;   /* Added to clip the image into a circle */
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: linear-gradient(145deg, #111827, #374151);
+  background: linear-gradient(145deg, #111827, #374151); /* Fallback background */
   border: 2px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
   transform: translateZ(40px); /* Makes logo pop out */
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.5rem;
-  color: var(--accent-color);
 }
 
 .projectCardContent {
@@ -191,25 +191,22 @@
 /* ======== Tablets (e.g., iPads) and smaller devices ======== */
 @media (max-width: 768px) {
   .heroSection {
-    padding: 100px 24px 80px; /* Reduced vertical padding */
+    padding: 100px 24px 80px;
   }
 
   .projectsGrid {
     padding: 60px 0;
-    /* The auto-fit property will naturally handle column wrapping.
-       Let's adjust the minimum size for a better fit on tablets. */
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 24px;
   }
 
   .projectCard {
-    padding: 24px; /* Reduced card padding */
+    padding: 24px;
   }
 
   .projectLogo {
     width: 100px;
     height: 100px;
-    font-size: 2rem;
   }
 
   .projectCardContent h3 {
@@ -230,7 +227,7 @@
 /* ======== Mobile Phones ======== */
 @media (max-width: 480px) {
   .container {
-    padding: 0 16px; /* Reduced side padding for the whole page */
+    padding: 0 16px;
   }
 
   .heroSection {
@@ -238,7 +235,6 @@
   }
   
   .projectsGrid {
-    /* Ensure grid items take up more space on small screens */
     grid-template-columns: 1fr;
     gap: 24px;
     padding: 40px 0;
@@ -247,7 +243,6 @@
   .projectLogo {
     width: 80px;
     height: 80px;
-    font-size: 1.75rem;
     margin-bottom: 20px;
   }
   
@@ -256,7 +251,7 @@
   }
 
   .projectCardContent p {
-    font-size: 0.95rem; /* Slightly smaller paragraph text */
+    font-size: 0.95rem;
   }
 
   .ctaSection {
